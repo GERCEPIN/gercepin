@@ -13,7 +13,8 @@ export async function POST(req: NextRequest) {
     const variants = await generateAdCopy({ ...body, productImage: null })
     return NextResponse.json({ variants })
   } catch (err) {
-    console.error('generate-copy error:', err)
-    return NextResponse.json({ error: 'Gagal generate copy iklan' }, { status: 500 })
+    const message = err instanceof Error ? err.message : String(err)
+    console.error('generate-copy error:', message)
+    return NextResponse.json({ error: message }, { status: 500 })
   }
 }
